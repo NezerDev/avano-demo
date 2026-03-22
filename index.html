@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVANO | Elevate Your Everyday</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="glass-nav">
+        <div class="logo">AVANO</div>
+        
+        <div class="search-container rounded">
+            <input type="text" placeholder="Search..." class="search-bar rounded">
+        </div>
+
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">Categories</a></li> <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content glass-card rounded">
+            <h1>Elevate Your Everyday Shopping with AVANO</h1>
+            <p>Discover our new earthy collection tailored for modern luxury.</p>
+            <a href="#shop" class="btn rounded">Shop Now</a>
+        </div>
+    </header>
+
+    <section class="stats">
+        <h2>Trusted by Thousands of AVANO shoppers every day</h2>
+        <div class="stats-grid">
+            <div class="stat-box rounded glass-card">
+                <h3>50K+</h3>
+                <p>Products</p>
+            </div>
+            <div class="stat-box rounded glass-card">
+                <h3>45+</h3>
+                <p>Brands</p>
+            </div>
+            <div class="stat-box rounded glass-card">
+                <h3>98%</h3>
+                <p>Satisfaction</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop" class="products">
+        <h2>Explore Every Corner of AVANO</h2>
+        <div class="product-grid">
+            <div class="product-card rounded">
+                <img src="https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&q=80&w=400" alt="Leather Bag">
+                <div class="product-info">
+                    <h4>Classic Leather Tote</h4>
+                    <p class="price">$120.00</p>
+                    <button class="add-to-cart-btn rounded">Add to Cart</button> </div>
+            </div>
+            <div class="product-card rounded">
+                <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=400" alt="Modern Lamp">
+                <div class="product-info">
+                    <h4>Earthy Ceramic Lamp</h4>
+                    <p class="price">$85.00</p>
+                    <button class="add-to-cart-btn rounded">Add to Cart</button> </div>
+            </div>
+            <div class="product-card rounded">
+                <img src="https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&q=80&w=400" alt="Minimalist Watch">
+                <div class="product-info">
+                    <h4>Signature Watch</h4>
+                    <p class="price">$150.00</p>
+                    <button class="add-to-cart-btn rounded">Add to Cart</button> </div>
+            </div>
+            <div class="product-card rounded">
+                <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&q=80&w=400" alt="Skincare">
+                <div class="product-info">
+                    <h4>Organic Skincare Set</h4>
+                    <p class="price">$65.00</p>
+                    <button class="add-to-cart-btn rounded">Add to Cart</button> </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="floating-cart glass-card" id="floating-cart">
+        🛒 <span class="cart-count" id="cart-count">0</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
