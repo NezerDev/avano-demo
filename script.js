@@ -1,13 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Mobile Menu Logic
+    // --- 1. Mobile Menu Logic (Existing) ---
     const mobileMenu = document.getElementById('mobile-menu');
     const navLinks = document.querySelector('.nav-links');
 
     mobileMenu.addEventListener('click', () => {
-        if (navLinks.style.display === 'flex') {
-            navLinks.style.display = 'none';
-        } else {
-            navLinks.style.display = 'flex';
+        navLinks.style.display = (navLinks.style.display === 'flex') ? 'none' : 'flex';
+        // (Keeping your original styling logic here...)
+        if(navLinks.style.display === 'flex') {
             navLinks.style.flexDirection = 'column';
             navLinks.style.position = 'absolute';
             navLinks.style.top = '70px';
@@ -16,43 +15,81 @@ document.addEventListener('DOMContentLoaded', () => {
             navLinks.style.background = 'rgba(246, 244, 240, 0.95)';
             navLinks.style.padding = '1rem 0';
             navLinks.style.textAlign = 'center';
-            navLinks.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
         }
     });
 
-    // 2. Add to Cart Logic
-    const cartButtons = document.querySelectorAll('.add-to-cart-btn');
+    // --- 2. Enhanced Cart Logic ---
+    let cart = [];
     const cartCountElement = document.getElementById('cart-count');
     const floatingCart = document.getElementById('floating-cart');
-    let itemsInCart = 0;
+    const cartOverlay = document.getElementById('cart-overlay');
+    const cartItemsList = document.getElementById('cart-items-list');
+    const cartTotalDisplay = document.getElementById('cart-total-display');
+    const whatsappBtn = document.getElementById('whatsapp-checkout-btn');
 
-    cartButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            // Increment cart count
-            itemsInCart++;
-            cartCountElement.innerText = itemsInCart;
+    // Add to Cart Function
+    document.querySelectorAll('.product-card').forEach(card => {
+        const button = card.querySelector('.add-to-cart-btn');
+        const title = card.querySelector('h4').innerText;
+        const priceText = card.querySelector('.price').innerText;
+        const price = parseFloat(priceText.replace('$', ''));
 
-            // Change button text temporarily to show it worked
-            const originalText = e.target.innerText;
-            e.target.innerText = "Added!";
-            e.target.style.backgroundColor = "#A67B5B"; // Match accent color
-            e.target.style.color = "#fff";
-            e.target.style.borderColor = "#A67B5B";
+        button.addEventListener('click', () => {
+            // Add to array
+            cart.push({ title, price });
+            updateCartUI();
 
-            // Add a little bounce animation to the floating cart
+            // Original Button Animation
+            button.innerText = "Added!";
+            button.style.backgroundColor = "#A67B5B";
+            button.style.color = "#fff";
+            
             floatingCart.style.transform = "scale(1.2)";
+            setTimeout(() => { floatingCart.style.transform = "scale(1)"; }, 200);
             setTimeout(() => {
-                floatingCart.style.transform = "scale(1)";
-            }, 200);
-
-            // Reset button text after 1.5 seconds
-            setTimeout(() => {
-                e.target.innerText = originalText;
-                e.target.style.backgroundColor = "transparent";
-                e.target.style.color = "#3A2C23";
-                e.target.style.borderColor = "#3A2C23";
-            }, 1500);
+                button.innerText = "Add to Cart";
+                button.style.backgroundColor = "transparent";
+                button.style.color = "#3A2C23";
+            }, 1000);
         });
     });
-});
 
+    function updateCartUI() {
+        cartCountElement.innerText = cart.length;
+        cartItemsList.innerHTML = "";
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            total += item.price;
+            const div = document.createElement('div');
+            div.style.display = "flex";
+            div.style.justifyContent = "space-between";
+            div.style.marginBottom = "10px";
+            div.innerHTML = `<span>${item.title}</span> <span>$${item.price.toFixed(2)}</span>`;
+            cartItemsList.appendChild(div);
+        });
+        cartTotalDisplay.innerText = `$${total.toFixed(2)}`;
+    }
+
+    // Open/Close Cart
+    floatingCart.addEventListener('click', () => cartOverlay.style.display = 'block');
+    document.getElementById('close-cart').addEventListener('click', () => cartOverlay.style.display = 'none');
+
+    // --- 3. THE WHATSAPP REDIRECT (The Money Maker) ---
+    whatsappBtn.addEventListener('click', () => {
+        if (cart.length === 0) return alert("Your cart is empty!");
+
+        const phoneNumber = "2348029405289"; // Your testing number or client's number
+        let message = "Hello! I'd like to place an order from your AVANO catalog:\n\n";
+        
+        cart.forEach((item, i) => {
+            message += `${i + 1}. ${item.title} - $${item.price.toFixed(2)}\n`;
+        });
+
+        message += `\n*Total: ${cartTotalDisplay.innerText}*`;
+        message += `\n\nIs this available?`;
+
+        const encodedMessage = encodeURIComponent(message);
+        window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+    });
+});
